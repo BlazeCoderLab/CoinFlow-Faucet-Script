@@ -31,7 +31,7 @@ if (isset($_GET['k']) && !empty($_GET['k'])) {
     // exit();
 
     // Or, for a simple error message:
-    die("Error: The 'k' parameter is missing. Please provide a valid value.");
+    die("Error: Key is missing. Invalid Request.");
 }
 
 ?>

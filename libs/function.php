@@ -2,7 +2,7 @@
 function get_token($length) {
 	$str = "";
 	$chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-	$size = strlen( $chars );
+	$size = strlen($chars);
 	for( $i = 0; $i < $length; $i++ ) {
 		$str .= $chars[ rand( 0, $size - 1 ) ];
 	}
@@ -23,7 +23,7 @@ function captcha_check($response, $secretkey) {
 			'content' => http_build_query($Captcha_data),
 		),
 	);
-	$Captcha_context  = stream_context_create($Captcha_options);
+	$Captcha_context = stream_context_create($Captcha_options);
 	$Captcha_result = file_get_contents($Captcha_url, false, $Captcha_context);
 	return $Captcha_result;
 } 
@@ -32,7 +32,7 @@ function checkaddress($address) {
 	global $mysqli;
 	global $time;
 	global $faucet;
-	$check = $mysqli->query("SELECT * FROM address_list WHERE bitcoin_address = '$address'");
+	$check = $mysqli->query("SELECT * FROM address_list WHERE address = '$address'");
 	if ($check->num_rows == 1) {
 		$check = $check->fetch_assoc();
 		$time_claim = $check['last'];
@@ -115,14 +115,14 @@ function log_user($address, $ip) {
 	global $time;
 	global $mysqli;
 	$ref ='';
-				// save a log of address
-	$log_address = $mysqli->query("SELECT * FROM address_list WHERE bitcoin_address = '$address'");
+	// save a log of address
+	$log_address = $mysqli->query("SELECT * FROM address_list WHERE address = '$address'");
 	if ($log_address->num_rows == 1) {
-		$mysqli->query("UPDATE address_list SET last = '$time' WHERE bitcoin_address = '$address'");
+		$mysqli->query("UPDATE address_list SET last = '$time' WHERE address = '$address'");
 	} else {
-		$mysqli->query("INSERT INTO address_list (bitcoin_address, ref, last) VALUES ('$address', '$ref', '$time')");
+		$mysqli->query("INSERT INTO address_list (address, ref, last) VALUES ('$address', '$ref', '$time')");
 	}
-                // save a log of ip
+	// save a log of ip
 	$log_ip = $mysqli->query("SELECT * FROM ip_list WHERE ip_address = '$ip'");
 	if ($log_ip->num_rows == 1) {
 		$mysqli->query("UPDATE ip_list SET last = '$time' WHERE ip_address = '$ip'");

@@ -19,23 +19,23 @@ if (isset($_SESSION['admin'])) {
 	} else {
 		if (isset($_GET['g']) and isset($_POST['name'])) {
 			$update = array(clean($_POST['name']), clean($_POST['description']), clean($_POST['url']), clean($_POST['theme']), clean($_POST['currency']), clean($_POST['api']), clean($_POST['timer']), clean($_POST['reward']), clean($_POST['ref']), clean($_POST['status']), clean($_POST['rewardlink']), clean($_POST['force']));
-			for ($i=0; $i <12 ; $i++) {
+			for ($i=0; $i < count($update) ; $i++) {
 				$id = $i + 1;
-				if ($id == 6 and $update[5] == 'lollollollollollollollollollol') {
+				if ($id == 6 and $update[5] == 'GOT_YOU_CHEATER') {
 			    # do nothing
 				} else {
 					$mysqli->query("UPDATE settings SET value = '{$update[$i]}' WHERE id = '$id'");
 				}
 			}
 		} elseif (isset($_GET['c']) and isset($_POST['captcha'])) {
-			$update = array(clean($_POST['captcha']), clean($_POST['repub']), clean($_POST['resec']), clean($_POST['bitid']), clean($_POST['bitkey']), clean($_POST['bitidwww']), clean($_POST['bitkeywww']), clean($_POST['chall']), clean($_POST['priv']), clean($_POST['hash']));
-			for ($i=0; $i <10 ; $i++) {
+			$update = array(clean($_POST['captcha']), clean($_POST['repub']), clean($_POST['resec']));
+			for ($i=0; $i < count($update) ; $i++) {
 				$id = $i + 13;
 				$mysqli->query("UPDATE settings SET value = '{$update[$i]}' WHERE id = '$id'");
 			}
 		} elseif (isset($_GET['a']) and isset($_POST['topad'])) {
 			$update = array(clean($_POST['topad']), clean($_POST['leftad']), clean($_POST['rightad']), clean($_POST['abovead']), clean($_POST['bottomad']), clean($_POST['modalad']));
-			for ($i=0; $i < 6 ; $i++) {
+			for ($i=0; $i < count($update) ; $i++) {
 				$id = $i + 23;
 				$mysqli->query("UPDATE settings SET value = '{$update[$i]}' WHERE id = '$id'");
 			}
@@ -73,14 +73,15 @@ if (isset($_SESSION['admin'])) {
 	<title><?=$faucet['name']?> - <?=$faucet['description']?></title> 
 	<link rel="shortcut icon" href="template//img/favicon.ico" type="image/x-icon">
 	<link rel="icon" href="template/img/favicon.ico" type="template/image/x-icon">
-	<link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
+	<!-- ===== Google Fonts | Roboto ===== -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+	<!-- ===== Custom Bootstrap Stylesheet ===== -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
 	<style type="text/css"> 
 	body {  
-		font-family: 'Saira Extra Condensed', sans-serif;
-		font-weight:400;
-		font-size:0.875em;
-		letter-spacing:0.063em;
+		font-family: 'Roboto', sans-serif;
 	}
 	h1 {
 		font-weight:900;font-size:3.25em;margin-bottom:15px;text-shadow:2px 3px 0px #898999;line-height:1.2;
@@ -128,6 +129,9 @@ if (isset($_SESSION['admin'])) {
 			<li class="nav-item">
 				<a class="nav-link" data-toggle="tab" href="#security">Security</a>
 			</li>
+			<li class="nav-item ml-auto">
+				<a class="nav-link btn btn-success" type="button" target="_blank" href="<?=$fullDomain?>">Visit Website</a>
+			</li>
 		</ul>
 		<div id="myTabContent" class="tab-content">
 			<div class="tab-pane fade show active" id="general">
@@ -142,7 +146,7 @@ if (isset($_SESSION['admin'])) {
 					<div class="form-group">
 						<label for="description">Description</label>
 						<input type="text" name="description" class="form-control" id="description" aria-describedby="descriptionhelp" value="<?=get_info(2)?>">
-						<small id="descriptionhelp" class="form-text text-muted">Say something about your Faucet</small>
+						<small id="descriptionhelp" class="form-text text-muted">Your Faucet's Description</small>
 					</div>
 					<div class="form-group">
 						<label for="url">Url</label>
@@ -155,15 +159,8 @@ if (isset($_SESSION['admin'])) {
 							<?php
 							$current_theme = get_info(4);
 							switch ($current_theme) {
-								case 'default':
-								echo '<option value="default" selected>Default</option><option value="materia">Materia</option><option value="other">Other</option>';
-								break;
-								
-								case 'materia':
-								echo '<option value="default">Default</option><option value="materia" selected>Materia</option><option value="other">Other</option>';
-								break;
-								case 'other':
-								echo '<option value="default">Default</option><option value="materia">Materia</option><option value="other" selected>Other</option>';
+								case 'main':
+								echo '<option value="main" selected>Main</option>';
 								break;
 							}
 							?>
@@ -172,13 +169,13 @@ if (isset($_SESSION['admin'])) {
 					<span class="badge badge-info">Reward System</span>
 					<div class="form-group">
 						<label for="api">FaucetPay Api</label>
-						<input type="password" name="api" class="form-control" id="api" aria-describedby="apihelp" value="lollollollollollollollollollol">
-						<small id="apihelp" class="form-text text-muted">Your FaucetPay Api</small>
+						<input type="password" name="api" class="form-control" id="api" aria-describedby="apihelp" value="GOT_YOU_CHEATER">
+						<small id="apihelp" class="form-text text-muted">FaucetPay Api</small>
 					</div>
 					<div class="form-group">
 						<label for="currency">Currency</label>
 						<input type="text" name="currency" class="form-control" id="currency" aria-describedby="currencyhelp" value="<?=get_info(5)?>">
-						<small id="currencyhelp" class="form-text text-muted">Your Faucet's Currency (BTC | BCH | DOGE | ETH | BLK | ... you can use any currency supported by FaucetPay)</small>
+						<small id="currencyhelp" class="form-text text-muted">Any currency supported by FaucetPay</small>
 					</div>
 					<div class="form-group">
 						<label for="currency">Timer</label>
@@ -193,7 +190,7 @@ if (isset($_SESSION['admin'])) {
 					<div class="form-group">
 						<label for="ref">Referral Commision</label>
 						<input type="number" name="ref" class="form-control" id="ref" aria-describedby="refhelp" value="<?=get_info(9)?>">
-						<small id="refhelp" class="form-text text-muted">Your Faucet's Referral Commision</small>
+						<small id="refhelp" class="form-text text-muted">Referral Commision</small>
 					</div>
 					<span class="badge badge-primary">Short Link</span>
 					<span class="badge badge-danger">Open libs/config.php to setup your short link api :)</span>
@@ -250,13 +247,7 @@ if (isset($_SESSION['admin'])) {
 							$status = get_info(13);
 							switch ($status) {
 								case 'recaptcha':
-								echo '<option value="recaptcha" selected>Recaptcha</option><option value="solvemedia">Solvemedia</option><option value="bitcaptcha">Bitcaptcha</option>';
-								break;
-								case 'solvemedia':
-								echo '<option value="recaptcha">Recaptcha</option><option value="solvemedia" selected>Solvemedia</option><option value="bitcaptcha">Bitcaptcha</option>';
-								break;
-								case 'bitcaptcha':
-								echo '<option value="recaptcha">Recaptcha</option><option value="solvemedia">Solvemedia</option><option value="bitcaptcha" selected>Bitcaptcha</option>';
+								echo '<option value="recaptcha" selected>Recaptcha</option>';
 								break;
 							}
 							?>
@@ -269,36 +260,6 @@ if (isset($_SESSION['admin'])) {
 					<div class="form-group">
 						<label for="resec">Recaptcha Secret Key</label>
 						<input type="text" name="resec" class="form-control" id="resec" value="<?=get_info(15)?>">
-					</div>
-					<br>
-					<div class="form-group">
-						<label for="bitid">Bitcaptcha Id</label>
-						<input type="text" name="bitid" class="form-control" id="bitid" value="<?=get_info(16)?>">
-					</div>
-					<div class="form-group">
-						<label for="bitkey">Bitcaptcha Key</label>
-						<input type="text" name="bitkey" class="form-control" id="bitkey" value="<?=get_info(17)?>">
-					</div>
-					<div class="form-group">
-						<label for="bitidwww">Bitcaptcha Id WWW Verson</label>
-						<input type="text" name="bitidwww" class="form-control" id="bitidwww" value="<?=get_info(18)?>">
-					</div>
-					<div class="form-group">
-						<label for="bitkeywww">Bitcaptcha Key WWW Verson</label>
-						<input type="text" name="bitkeywww" class="form-control" id="bitkeywww" value="<?=get_info(19)?>">
-					</div>
-					<br>
-					<div class="form-group">
-						<label for="chall">SolveMedia Challenge Key</label>
-						<input type="text" name="chall" class="form-control" id="chall" value="<?=get_info(20)?>">
-					</div>
-					<div class="form-group">
-						<label for="priv">SolveMedia Private Key</label>
-						<input type="text" name="priv" class="form-control" id="priv" value="<?=get_info(21)?>">
-					</div>
-					<div class="form-group">
-						<label for="hash">SolveMedia Hash Key</label>
-						<input type="text" name="hash" class="form-control" id="hash" value="<?=get_info(22)?>">
 					</div>
 					<button type="submit" class="btn btn-success btn-lg btn-block">Save This Page</button>
 				</form>
@@ -359,12 +320,11 @@ if (isset($_SESSION['admin'])) {
 					<button type="submit" class="btn btn-success btn-lg btn-block">Save This Page</button>
 				</form> 
 			</div>
-			<div class="alert alert-info text-center">This script uses Cookie to cache some datas in order to reduce mysqli request. So it can take up to 10 minutes for your user to see your updates !</div>
 		</div>
 		<?php } ?>
-		<footer class="text-center">
+		<footer class="text-center mt-3">
 			<!---Please do not remove the link to support us, thanks!-->
-			<p>&copy; <?= date('Y') ?> <a href='<?=$faucet['url']?>'><?=$faucet['name']?></a>, <strong id='copyright'>Powered by <a href='#!' class="cbc">CoinFlow Script</a></strong></p>
+			<p>&copy; <?= date('Y') ?> <a href='<?=$faucet['url']?>'><?=$faucet['name']?></a>, <strong id='copyright'>Powered by <a href='https://github.com/BlazeCoderLab/CoinFlow-Faucet-Script' target="_blank" class="cbc">CoinFlow Script</a></strong></p>
 		</footer>  
 	</div>
 	<script src="https://use.fontawesome.com/7002d3875b.js"></script>

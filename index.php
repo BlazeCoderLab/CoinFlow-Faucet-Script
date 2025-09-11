@@ -20,14 +20,6 @@ if (isset($_POST['address']) and isset($_POST['token'])) {
 		if (isset($_POST['g-recaptcha-response']) && $faucet['captcha'] == 'recaptcha') {
 			$secret = get_info(15);
 			$CaptchaCheck = json_decode(captcha_check($_POST['g-recaptcha-response'], $secret))->success; 
-		} elseif (isset($_POST["adcopy_challenge"]) && isset($_POST["adcopy_response"])&& $faucet['captcha'] == 'solvemedia') {
-			$privatekey = get_info(21);
-			$hashkey = get_info(22);
-			$solvemedia_response = solvemedia_check_answer($privatekey,$_SERVER["REMOTE_ADDR"],$_POST["adcopy_challenge"],$_POST["adcopy_response"],$hashkey);
-			$CaptchaCheck = $solvemedia_response->is_valid;
-		} elseif (isset($_POST['sqn_captcha']) and $faucet['captcha'] == 'bitcaptcha') {
-			$captcha_key = ((strpos($_SERVER['HTTP_HOST'],'ww.')>0)?get_info(19):get_info(17));
-			$CaptchaCheck = sqn_validate($_POST['sqn_captcha'], $captcha_key, $id);
 		} else {
 			$alert = "<center><img style='max-width: 200px;' src='template/img/bots.png'><br><div class='alert alert-warning'>Invalid Captcha</div></center>"; 
 		}
@@ -48,27 +40,19 @@ if (isset($_POST['address']) and isset($_POST['token'])) {
 				# check short link
 				if (get_info(12) == 'on' or (isset($_POST['link']) and get_info(10) == 'on')) {
 					$key = get_token(15); 
-					for ($i=1; $i <= count($link) ; $i++) { 
+					for ($i=1; $i <= count($link); $i++) { 
 						if (!isset($_COOKIE[$i])) {
-							$mysqli->query("INSERT INTO link (bitcoin_address, sec_key, ip) VALUES ('$address', '$key', '$ip')");
+							$mysqli->query("INSERT INTO link (address, sec_key, ip) VALUES ('$address', '$key', '$ip')");
 							log_user($address, $ip);
-							setcookie($i, 'fuck cheater :P', time() + 86400);
+							setcookie($i, 'Link Already Visited', time() + 86400);
 							$url = $link[$i];
 							$full_url = str_replace("{key}",$key,$url);
 							$short_link = file_get_contents($full_url);
 							break;
 						}
 					}
-					if (!isset($short_link)) {
-						$mysqli->query("INSERT INTO link (bitcoin_address, sec_key, ip) VALUES ('$address', '$key', '$ip')");
-						log_user($address, $ip);
-						$url = $link_default;
-						$full_url = str_replace("{key}",$key,$url);
-						$short_link = file_get_contents($full_url);
-					} 
 					header("Location: ". $short_link);
-					echo '<script> window.location.href="' .$short_link. '"; </script>';
-					die('Redirecting you to short link, please wait ...');
+					exit();
 				} else {
 
 					#normal claim
@@ -105,7 +89,7 @@ if (isset($_GET['k'])) {
 	$check = $mysqli->query("SELECT * FROM link WHERE sec_key = '$key' and ip = '$ip' LIMIT 1");
 	if ($check->num_rows == 1) { 
 		$check = $check->fetch_assoc();
-		$address = $check['bitcoin_address'];
+		$address = $check['address'];
 		$mysqli->query("DELETE FROM link WHERE sec_key = '$key'");
 		$faucetpay_api = get_info(6);
 		$faucetpay = new FaucetPay($faucetpay_api, $faucet['currency']);
@@ -134,18 +118,29 @@ $_SESSION['token'] = get_token(70);
 	<title><?=$faucet['name']?> - <?=$faucet['description']?></title> 
 	<link rel="shortcut icon" href="template//img/favicon.ico" type="image/x-icon">
 	<link rel="icon" href="template/img/favicon.ico" type="template/image/x-icon">
-	<link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
+	<!-- ===== Google Fonts | Roboto ===== -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+	<!-- ===== Custom Stylesheets ===== -->
 	<link rel="stylesheet" type="text/css" href="template/css/<?=$faucet['theme']?>.css"> 
 	<link rel="stylesheet" href="template/css/countdown.css"> 
 	<style type="text/css"> 
 	body {  
-		font-family: 'Saira Extra Condensed', sans-serif;
-		font-weight:400;
-		font-size:0.875em;
-		letter-spacing:0.063em;
+		font-family: 'Roboto', sans-serif;
 	}
 	img, iframe {
 		max-width: 100%;
+	}
+	.mt-10 {
+		margin-top: 10px;
+	}
+	.mt-20 {
+		margin-top: 20px;
+	}
+	.mt-30 {
+		margin-top: 30px;
 	}
 	.login {
 		background-color: rgba(226, 212, 296, 0.3);
@@ -162,62 +157,12 @@ $_SESSION['token'] = get_token(70);
 	footer, .cbc {
 		color: #F67F7F;
 	}	
-	.ribbon {
-		font-weight:900;
-		font-size:1.8em;
-		margin-bottom:30px;
-		text-shadow:2px 3px 0px #898999;
-		line-height:1.2;
-		color: #E4DEED;
-		width: 50%;
-		position: relative;
-		background: #ba89b6;
-		text-align: center;
-		padding: 1em 2em;  
-		margin: 1em auto 1.5em;   
-	}
-	.ribbon:hover {
-		background-color: #D5A2D1;
-	}
-	.ribbon:before, .ribbon:after {
-		content: "";
-		position: absolute;
-		display: block;
-		bottom: -1em;
-		border: 1.5em solid #986794;
-		z-index: -1;
-	}
-	.ribbon:before {
-		left: -2em;
-		border-right-width: 1.5em;
-		border-left-color: transparent;
-	}
-	.ribbon:after {
-		right: -2em;
-		border-left-width: 1.5em;
-		border-right-color: transparent;
-	}
-	.ribbon .ribbon-content:before, .ribbon .ribbon-content:after {
-		content: "";
-		position: absolute;
-		display: block;
-		border-style: solid;
-		border-color: #804f7c transparent transparent transparent;
-		bottom: -1em;
-	}
-	.ribbon .ribbon-content:before {
-		left: 0;
-		border-width: 1em 0 0 1em;
-	}
-	.ribbon .ribbon-content:after {
-		right: 0;
-		border-width: 1em 1em 0 0;
-	}
+	
 </style>
 </head>
 <body> 
 	<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-		<a class="navbar-brand" href="index.php"><?=$faucet['name']?></a>
+		<a class="navbar-brand" href="<?=$fullDomain?>"><?=$faucet['name']?></a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
@@ -225,7 +170,7 @@ $_SESSION['token'] = get_token(70);
 		<div class="collapse navbar-collapse" id="navbarColor01">
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item active">
-					<a class="nav-link" href="index.php"><i class="fa fa-home" aria-hidden="true"></i> Home <span class="sr-only">(current)</span></a>
+					<a class="nav-link" href="<?=$fullDomain?>"><i class="fa fa-home" aria-hidden="true"></i> Home <span class="sr-only">(current)</span></a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="#"><i class="fa fa-info" aria-hidden="true"></i> About us</a>
@@ -233,32 +178,30 @@ $_SESSION['token'] = get_token(70);
 				<li class="nav-item">
 					<a class="nav-link" href="#"><i class="fa fa-envelope-open" aria-hidden="true"></i> Contact</a>
 				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="http://coinbox.club/threads/free-coinbox-faucet-script.5/"><i class="fa fa-bolt" aria-hidden="true"></i> CoinFlow Script</a>
-				</li>
 			</ul>
 			<ul class="navbar-nav ml-auto">
 				<li class="nav-item active">
-					<a class="nav-link" href="#"><i class="fa fa-balance-scale" aria-hidden="true"></i> Faucet Balance: <?=get_info(30)?> <?=$currency_name?> <span class="sr-only">(current)</span></a>
+					<a class="nav-link" href="#"><i class="fa fa-balance-scale" aria-hidden="true"></i> Balance: <?=(get_info(30) == 0) ? "Make a claim to update it" : ((number_format(get_info(30) / 100000000, 8, '.', '') . $currency_name))?></a>
 				</li>
 			</ul>
 		</div>
 	</nav>
-	<center>
-		<?=$ad['top']?>
+
+	<center class="mt-10">
+		<?= ($ad['top'])?: '<img src="https://placehold.co/728x90">';?>
 	</center>
-	<h1 class="ribbon ribbon-content">Welcome to <?=$faucet['name']?></h1>
-	<div class="container-fluid" style="margin-top: 30px;">
+
+	<div class="container-fluid mt-30">
 		<div class="row">
-			<div class="col-sm-3 text-center" style="margin-top: 20px;">
-				<?=$ad['left']?>
+			<div class="col-sm-3 text-center mt-20">
+			<?= ($ad['left'])?: '<img src="https://placehold.co/160x600">';?>	
 			</div>
 			<div class="col-sm-6 login">
 				<div class="alert alert-success text-center" style="margin-top: 10px;">
-					<p><i class="fa fa-trophy" aria-hidden="true"></i> Claim <?=$faucet['reward']?> <?=$currency_name?> every <?=floor($faucet['timer']/60)?> minutes .</p>
+					<p class="mb-0"><i class="fa fa-trophy" aria-hidden="true"></i> Claim <strong><?=number_format($faucet['reward'] / 100000000, 8, '.', '')?> <?=$currency_name?></strong> every <strong><?=floor($faucet['timer']/60)?></strong> minutes .</p>
 				</div>
 				<center>
-					<?=$ad['above-form']?>
+					<?= ($ad['above-form'])?: '<img src="https://placehold.co/728x90">';?>
 				</center>
 				<?php if (isset($alert)) { ?>
 				<div class="modal fade" id="alert" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -274,16 +217,16 @@ $_SESSION['token'] = get_token(70);
 				<form action="" method="post">
 					<input type="hidden" name="token" value="<?=$_SESSION['token']?>">
 					<div class="form-group">
-						<span class="badge badge-warning control-label">Your Bitcoin Address</span>
+						<span class="badge badge-warning control-label">Your <?=$currency_name?> Address</span>
 						<div class="form-group">
 							<div class="input-group">
 								<div class="input-group-addon"><img src="template/img/wallet.png" width="40px"></div>
-								<input type="text" class="form-control" name="address" <?php if(isset($_COOKIE['address'])) {echo "value='" . $_COOKIE['address'] . "'";} else {echo 'placeholder="Must be linked to FaucetPay first"'; } ?> style="border-radius: 0px 20px 20px 0px;">
+								<input type="text" class="form-control" name="address" <?php if(isset($_COOKIE['address'])) {echo "value='" . $_COOKIE['address'] . "'";} else {echo 'placeholder="Your '.  $currency_name . ' Address"'; } ?> style="border-radius: 0px 20px 20px 0px;">
 							</div>
 						</div>
 					</div> 
 					<center>
-						<?=$ad['bottom']?> 
+						<?= ($ad['bottom'])?: '<img src="https://placehold.co/728x90">';?>
 					</center>
 					<div class="form-group">
 						<span class="badge badge-danger control-label">Complete Captcha</span>
@@ -294,16 +237,20 @@ $_SESSION['token'] = get_token(70);
 							</div>
 						</div>
 					</div>
-					<?php if (get_info(10) == 'on' and get_info(12) !== 'on') { for ($i=1; $i <= count($link) ; $i++) { if (!isset($_COOKIE[$i])) { ?>
+					<?php if (get_info(10) == 'on' and get_info(12) !== 'on') { 
+						for ($i=1; $i <= count($link); $i++) { 
+							if (!isset($_COOKIE[$i])) { ?>
 					<label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
 						<input type="checkbox" name="link" value="yes" class="custom-control-input" checked>
 						<span class="custom-control-indicator"></span>
-						<span class="custom-control-description"><i class="fa fa-gift" aria-hidden="true"></i> <strong>I want to click <font color="#F67F7F">SHORT LINK</font> and receive<font color="#F67F7F"> + <?=get_info(8)?> satoshi bounus</font></strong></span>
+						<span class="custom-control-description">
+							<i class="fa fa-gift" aria-hidden="true"></i> <strong>I want <b style="color: #F67F7F"><?= number_format(get_info(11) / 100000000, 8, '.', '')?> <?=$currency_name?> bonus</b> by completing <b style="color: #F67F7F">SHORT LINK</b></strong>
+						</span>
 					</label> 
 					<?php break; } }} ?>
-					<button type="button" class="btn btn-warning btn-lg btn-block" style="margin-bottom: 20px;" data-toggle="modal" data-target="#next"><i class="fa fa-paper-plane" aria-hidden="true"></i> <strong>Claim Free Bitcoin</strong></button>
+					<button type="button" class="btn btn-warning btn-lg btn-block" style="margin-bottom: 20px;" data-toggle="modal" data-target="#next"><i class="fa fa-paper-plane" aria-hidden="true"></i> <strong>Claim Your <?=$currency_name?></strong></button>
 					<div class="modal fade bd-example-modal-lg" id="next" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-						<div class="modal-dialog modal-lg" role="document">
+						<div class="modal-dialog modal-lg modal-dialog-centered" role="document">
 							<div class="modal-content">
 								<div class="modal-header">
 									<h5 class="modal-title" id="exampleModalLabel">Final Step</h5>
@@ -312,30 +259,31 @@ $_SESSION['token'] = get_token(70);
 									</button>
 								</div>
 								<div class="modal-body">
-									<?=$ad['modal']?>
+									<?= ($ad['modal'])?: '<img src="https://placehold.co/300x250">';?>
 								</div>
 								<div class="modal-footer">
 									<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-									<button type="submit" class="btn btn-primary" id="claim">Claim Your Coin</button>
+									<button type="submit" class="btn btn-primary" id="claim">Claim</button>
 								</div>
 							</div>
 						</div>
 					</div>
-					<code>Ref link: <?=$faucet['url']?>?r=Your_bitcoin_address</code>
+					<code>Ref link: <?=$faucet['url']?>?r=Your_<?=$currency_name?>_address</code>
 				</form>
-				<?php } else { $wait= 1; echo "<div class='alert alert-info'>You have to wait</div><br><div id='CountDownTimer' data-timer='" . checkip($ip) . "' style='width: 100%;'></div>"; } ?> 
-				<center><a href='http://coinbox.club' target='_blank'><img src='http://coinbox.club/gif.gif'></a></center>
-				<!---You can keep this banner to support us, thanks !-->
+				<?php } 
+				else { 
+					$wait= 1; 
+					echo "<div class='alert alert-info mt-20'>You have to wait</div><br><div id='CountDownTimer' data-timer='" . checkip($ip) . "' style='width: 100%;'></div>"; 
+				} ?> 
 			</div>
-			<div class="col-sm-3 text-center" style="margin-top: 20px;">
-				<?=$ad['right']?>
+			<div class="col-sm-3 text-center mt-20">
+				<?= ($ad['right'])?: '<img src="https://placehold.co/160x600">';?>
 			</div>
 		</div>
 	</div>
 	<br>
-	<footer class="text-center">
-		<!---Please do not remove the link to support us, thanks!-->
-		<p>&copy; 2017 <a href='<?=$faucet['url']?>'><?=$faucet['name']?></a>, <strong id='copyright'>Powered by <a href='http://coinbox.club' class="cbc">CoinFlow Script</a></strong></p>
+	<footer class="text-center mt-3">
+		<p>&copy; <?= date('Y') ?> <a style="color: #fff;font-weight: bold;" href='<?=$faucet['url']?>'><?=$faucet['name']?></a>, <span id='copyright'>Powered by <a style="font-weight: bold;" href='https://github.com/BlazeCoderLab/CoinFlow-Faucet-Script' target="_blank" class="cbc">CoinFlow Script</a></span></p>
 	</footer> 
 	<script src="template/js/jquery-3.2.1.min.js"></script>
 	<script src="template/js/popper.min.js"></script>

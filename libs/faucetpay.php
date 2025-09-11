@@ -142,8 +142,7 @@ class FaucetPay
             return array(
                 'success' => true,
                 'message' => 'Payment sent to your address using FaucetPay.io',
-                'html' => '<div class="alert alert-success">' . htmlspecialchars($amount) . ' satoshi was sent to <a target="_blank" href="https://faucetPay.io/balance/' . rawurlencode($to) . '">your account at FaucetPay.io</a>.</div>',
-                'html_coin' => '<div class="alert alert-success">' . htmlspecialchars(rtrim(rtrim(sprintf("%.8f", $amount/100000000), '0'), '.')) . ' '.$this->currency.' was sent to <a target="_blank" href="https://faucetpay.io/balance/' . rawurlencode($to) . '">your account at FaucetPay.io</a>.</div>',
+                'html' => '<div class="alert alert-success">' . htmlspecialchars(rtrim(rtrim(sprintf("%.8f", $amount/100000000), '0'), '.')) . ' '.$this->currency.' was sent to <a target="_blank" href="https://faucetpay.io/balance/' . rawurlencode($to) . '">your account at FaucetPay.io</a>.</div>',
                 'balance' => $r["balance"],
                 'balance_bitcoin' => $r["balance_bitcoin"],
                 'response' => json_encode($r)
