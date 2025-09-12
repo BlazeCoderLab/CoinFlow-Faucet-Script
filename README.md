@@ -20,11 +20,23 @@ Fast, responsive, multi-currency cryptocurrency faucet script.
 
 ---
 
+## 🧾 Live Demo
+- User: [User Panel](https://crownpay.site/demo/)  
+- Admin: [Admin Panel](https://crownpay.site/demo/admin.php)  
+    - *Admin login Details*
+        - Username: `admin`
+        - password: `admin`
+
+---
+
 ## ⚙️ Installation Instructions
 1. Upload files to your server  
 2. Configure `/libs/config.php`  
 3. To Run installer, go to: `https://yourdomain.com/install`  
 4. To Manage faucet with admin panel, go to: `https://yourdomain.com/admin.php` 
+    - **Default Admin Login Details**
+        - Username: `admin`
+        - password: `admin`
 
 ---
 
