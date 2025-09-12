@@ -20,7 +20,7 @@ Fast, responsive, multi-currency cryptocurrency faucet script.
 
 ## 🔰 Live Demo
 - User: <a target="_blank" href="https://crownpay.site/demo/">User Panel</a>
-- User: <a target="_blank" href="https://crownpay.site/demo/">User Panel</a>
+- Admin: <a target="_blank" href="https://crownpay.site/demo/">Admin Panel</a>
     - *Admin login Details*
         - Username: `admin`
         - password: `admin`
