@@ -1,8 +1,8 @@
-# CoinFlow
+# CoinFlow - Crypto Faucet Script
 Fast, responsive, multi-currency cryptocurrency faucet script. 
 
 - *Version: v1.1.1* 
----
+
 
 ## 🚀 Features
 - Multi-crypto support  
@@ -12,22 +12,19 @@ Fast, responsive, multi-currency cryptocurrency faucet script.
 - PHP 7.4+ & MySQLi based  
 - More coming soon ... (Based on support and time)
 
----
 
 ## 🧾 Minimum Requirements
 - PHP >= 7.4  
 - MySQLi extension enabled  
 
----
 
-## 🧾 Live Demo
-- User: [User Panel](https://crownpay.site/demo/)  
-- Admin: [Admin Panel](https://crownpay.site/demo/admin.php)  
+## 🔰 Live Demo
+- User: <a target="_blank" href="https://crownpay.site/demo/">User Panel</a>
+- User: <a target="_blank" href="https://crownpay.site/demo/">User Panel</a>
     - *Admin login Details*
         - Username: `admin`
         - password: `admin`
 
----
 
 ## ⚙️ Installation Instructions
 1. Upload files to your server  
@@ -38,7 +35,6 @@ Fast, responsive, multi-currency cryptocurrency faucet script.
         - Username: `admin`
         - password: `admin`
 
----
 
 ## ⚒ Roadmap
 
@@ -49,6 +45,7 @@ Fast, responsive, multi-currency cryptocurrency faucet script.
 - [ ] Update: Admin panel UI for Ease.
 - [ ] Fix: Admin panel security enhancements.
 - [ ] Update: Support for PHP 8.x.x. (Time Taken, Will be done only when enough support)
+
 
 ## 💰 Donations
 In order to support me or motivate me for more future updates, you can do it by donating a little bit to help me spend more time on updates and enhancing this script for everyone.
@@ -62,12 +59,10 @@ In order to support me or motivate me for more future updates, you can do it by 
     - Doge (DOGE): `DFh1YvhoxCPgqDgPKn4ok1waqVHW5Vs4qz`  
     - Pepe (PEPE): `0x22B33d5d8129B12926099bd32a36056613f79844`  
 
----
 
 ## 🎫 Support  
 Open an issue for help or feedback.
 
----
 
 ## 🛠 Changelog
 
