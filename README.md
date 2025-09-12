@@ -1,8 +1,8 @@
-# CoinFlow
+# CoinFlow - Crypto Faucet Script
 Fast, responsive, multi-currency cryptocurrency faucet script. 
 
 - *Version: v1.1.1* 
----
+
 
 ## 🚀 Features
 - Multi-crypto support  
@@ -12,43 +12,41 @@ Fast, responsive, multi-currency cryptocurrency faucet script.
 - PHP 7.4+ & MySQLi based  
 - More coming soon ... (Based on support and time)
 
----
 
 ## 🧾 Minimum Requirements
 - PHP >= 7.4  
 - MySQLi extension enabled  
 
----
 
-## 🧾 Live Demo
-- User: [User Panel](https://crownpay.site/demo/)  
-- Admin: [Admin Panel](https://crownpay.site/demo/admin.php)  
+## 🔰 Live Demo
+- User: <a target="_blank" href="https://crownpay.site/demo/">User Panel</a>
+- Admin: <a target="_blank" href="https://crownpay.site/demo/">Admin Panel</a>
     - *Admin login Details*
         - Username: `admin`
         - password: `admin`
 
----
 
 ## ⚙️ Installation Instructions
 1. Upload files to your server  
 2. Configure `/libs/config.php`  
-3. To Run installer, go to: `https://yourdomain.com/install`  
-4. To Manage faucet with admin panel, go to: `https://yourdomain.com/admin.php` 
+3. To run **installer**, go to: `https://yourdomain.com/install`  
+4. To manage *Faucet* through **Admin Panel**, go to: `https://yourdomain.com/admin` 
     - **Default Admin Login Details**
         - Username: `admin`
         - password: `admin`
 
----
 
 ## ⚒ Roadmap
 
 - [x] Updated: FaucetHub to FaucetPay Library.
 - [x] Removed: Solvemedia & Bit Captcha Providers (deprecated now).
 - [x] Updated: Optimized the database by removing irrelevant fields.
+- [x] Updated: Moved Admin Panel to a separate folder.
 - [ ] Add: Turnstile Captcha for better experience.
 - [ ] Update: Admin panel UI for Ease.
 - [ ] Fix: Admin panel security enhancements.
 - [ ] Update: Support for PHP 8.x.x. (Time Taken, Will be done only when enough support)
+
 
 ## 💰 Donations
 In order to support me or motivate me for more future updates, you can do it by donating a little bit to help me spend more time on updates and enhancing this script for everyone.
@@ -62,12 +60,10 @@ In order to support me or motivate me for more future updates, you can do it by 
     - Doge (DOGE): `DFh1YvhoxCPgqDgPKn4ok1waqVHW5Vs4qz`  
     - Pepe (PEPE): `0x22B33d5d8129B12926099bd32a36056613f79844`  
 
----
 
 ## 🎫 Support  
 Open an issue for help or feedback.
 
----
 
 ## 🛠 Changelog
 
@@ -75,6 +71,7 @@ Open an issue for help or feedback.
 Version 1.1.1 - (12 September 2025)
 - Fixed: Auto Fetching Domain Issue
 - Added: Manual input for the domain in './libs/config.php'
+- Updated: Moved Admin Panel to a separate Folder
 
 Version 1.1.0 - (11 September 2025)
 - Removed: Extra fields from admin panel that are no longer needed to enhance performance
