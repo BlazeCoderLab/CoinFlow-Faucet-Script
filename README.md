@@ -1,7 +1,7 @@
 # CoinFlow
 Fast, responsive, multi-currency cryptocurrency faucet script. 
 
-- *Version: v1.1.0* 
+- *Version: v1.1.1* 
 ---
 
 ## 🚀 Features
@@ -23,8 +23,8 @@ Fast, responsive, multi-currency cryptocurrency faucet script.
 ## ⚙️ Installation Instructions
 1. Upload files to your server  
 2. Configure `/libs/config.php`  
-3. To Run installer, go to: `https://yourfaucet.com/install`  
-4. To Manage faucet with admin panel, go to: `https://yourfaucet.com/admin.php` 
+3. To Run installer, go to: `https://yourdomain.com/install`  
+4. To Manage faucet with admin panel, go to: `https://yourdomain.com/admin.php` 
 
 ---
 
@@ -32,7 +32,7 @@ Fast, responsive, multi-currency cryptocurrency faucet script.
 
 - [x] Updated: FaucetHub to FaucetPay Library.
 - [x] Removed: Solvemedia & Bit Captcha Providers (deprecated now).
-- [x] Updated: Optimize database by removing old fields that no longer exists or needed.
+- [x] Updated: Optimized the database by removing irrelevant fields.
 - [ ] Add: Turnstile Captcha for better experience.
 - [ ] Update: Admin panel UI for Ease.
 - [ ] Fix: Admin panel security enhancements.
@@ -60,6 +60,10 @@ Open an issue for help or feedback.
 ## 🛠 Changelog
 
 ```
+Version 1.1.1 - (12 September 2025)
+- Fixed: Auto Fetching Domain Issue
+- Added: Manual input for the domain in './libs/config.php'
+
 Version 1.1.0 - (11 September 2025)
 - Removed: Extra fields from admin panel that are no longer needed to enhance performance
 - Removed: Solvemedia & Bit Captcha Providers (Deprecated)
