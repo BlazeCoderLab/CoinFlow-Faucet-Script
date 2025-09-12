@@ -19,7 +19,7 @@ if (isset($_SESSION['admin'])) {
 	} else {
 		if (isset($_GET['g']) and isset($_POST['name'])) {
 			$update = array(clean($_POST['name']), clean($_POST['description']), clean($_POST['url']), clean($_POST['theme']), clean($_POST['currency']), clean($_POST['api']), clean($_POST['timer']), clean($_POST['reward']), clean($_POST['ref']), clean($_POST['status']), clean($_POST['rewardlink']), clean($_POST['force']));
-			for ($i=0; $i < count($update) ; $i++) {
+			for ($i=0; $i < count($update); $i++) {
 				$id = $i + 1;
 				if ($id == 6 and $update[5] == 'GOT_YOU_CHEATER') {
 			    # do nothing
@@ -130,7 +130,7 @@ if (isset($_SESSION['admin'])) {
 				<a class="nav-link" data-toggle="tab" href="#security">Security</a>
 			</li>
 			<li class="nav-item ml-auto">
-				<a class="nav-link btn btn-success" type="button" target="_blank" href="<?=$fullDomain?>">Visit Website</a>
+				<a class="nav-link btn btn-success" type="button" target="_blank" href="<?=$baseUrl?>">Visit Website</a>
 			</li>
 		</ul>
 		<div id="myTabContent" class="tab-content">

@@ -14,12 +14,9 @@ if ($mysqli->connect_error) {
 $admin_username = 'admin';
 $admin_password = 'admin';
 
-// Detect protocol (http or https)
-$protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
-$domain = $_SERVER['HTTP_HOST']; // Get host (domain name)
-$fullDomain = $protocol . $domain . '/'; // Get the full domain
+$baseUrl = "https://yourdomain.com/"; // Your Website URL (domain name)
 
-$url = $fullDomain . 'link.php?k={key}&format=text'; // Default url for shortlinks [Don't change it]
+$url = $baseUrl . 'link.php?k={key}&format=text'; // Default url for shortlinks [Don't change it]
 
 $link[1] = "https://cuty.io/api?api=f2741c3c62d457125243be984d08db3225565ad5&url={$url}";
 $link[2] = "https://ez4short.com/api?api=671ce36bc74acfacb13abd8b8e08a1a944ef0dde&url={$url}";

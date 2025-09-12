@@ -42,12 +42,12 @@ $mysqli->query("CREATE TABLE IF NOT EXISTS `settings` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
 
-$fullDomainEscaped = $mysqli->real_escape_string($fullDomain);
+$cleanUrl = $mysqli->real_escape_string($baseUrl);
 
 $mysqli->query("INSERT INTO `settings` (`id`, `name`, `value`) VALUES
 (1, 'Name', 'CoinFlow'),
 (2, 'Description', 'Sleek, Fast and Lightweight Crypto Faucet Script'),
-(3, 'Url', '$fullDomainEscaped'),
+(3, 'Url', '$cleanUrl'),
 (4, 'Theme', 'main'),
 (5, 'Currency', 'TRX'),
 (6, 'FaucetPay Api', ''),

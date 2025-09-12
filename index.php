@@ -162,7 +162,7 @@ $_SESSION['token'] = get_token(70);
 </head>
 <body> 
 	<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-		<a class="navbar-brand" href="<?=$fullDomain?>"><?=$faucet['name']?></a>
+		<a class="navbar-brand" href="<?=$baseUrl?>"><?=$faucet['name']?></a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
@@ -170,7 +170,7 @@ $_SESSION['token'] = get_token(70);
 		<div class="collapse navbar-collapse" id="navbarColor01">
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item active">
-					<a class="nav-link" href="<?=$fullDomain?>"><i class="fa fa-home" aria-hidden="true"></i> Home <span class="sr-only">(current)</span></a>
+					<a class="nav-link" href="<?=$baseUrl?>"><i class="fa fa-home" aria-hidden="true"></i> Home <span class="sr-only">(current)</span></a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="#"><i class="fa fa-info" aria-hidden="true"></i> About us</a>
