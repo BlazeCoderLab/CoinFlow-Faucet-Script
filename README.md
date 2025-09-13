@@ -8,7 +8,7 @@ Fast, responsive, multi-currency cryptocurrency faucet script.
 - Multi-crypto support  
 - Mobile-friendly design  
 - Built-in short-link monetization  
-- Secure admin panel  
+- Secure admin panel  (Under Working)
 - PHP 7.4+ & MySQLi based  
 - More coming soon ... (Based on support and time)
 
@@ -16,14 +16,6 @@ Fast, responsive, multi-currency cryptocurrency faucet script.
 ## 🧾 Minimum Requirements
 - PHP >= 7.4  
 - MySQLi extension enabled  
-
-
-## 🔰 Live Demo
-- User: <a target="_blank" href="https://crownpay.site/demo/">User Panel</a>
-- Admin: <a target="_blank" href="https://crownpay.site/demo/">Admin Panel</a>
-    - *Admin login Details*
-        - Username: `admin`
-        - password: `admin`
 
 
 ## ⚙️ Installation Instructions
@@ -72,6 +64,7 @@ Version 1.1.1 - (12 September 2025)
 - Fixed: Auto Fetching Domain Issue
 - Added: Manual input for the domain in './libs/config.php'
 - Updated: Moved Admin Panel to a separate Folder
+- Other improvements and minor bug fixes
 
 Version 1.1.0 - (11 September 2025)
 - Removed: Extra fields from admin panel that are no longer needed to enhance performance
